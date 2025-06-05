@@ -1,16 +1,19 @@
 import React from 'react'
 import { Link,NavLink } from 'react-router-dom'
+import logo from '../../assets/logo.png'
 export default function Header() {
     return (
         <header className="shadow sticky z-50 top-0">
             <nav className="bg-indigo-400 border-gray-200 px-4 lg:px-6 py-2.5">
-                <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-                    <Link to="/" className="flex items-center">
+                <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl ">
+                    <Link to="/" className="flex items-center font-bold text-white text-xl">
                         <img
-                            src="https://alexharkness.com/wp-content/uploads/2020/06/logo-2.png"
+                            src={logo}
                             className="mr-3 h-12"
                             alt="Logo"
                         />
+                        SCHOLARSHIP FINDER
+                    
                     </Link >
                     <div className="flex items-center lg:order-2">
                         <Link
@@ -30,7 +33,7 @@ export default function Header() {
                         className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
                         id="mobile-menu-2"
                     >
-                        <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+                        <ul className="items-center flex flex-col mt-4 font-medium lg:flex-row lg:space-x-10 lg:mt-0">
                             <li>
                                 <NavLink to="/"
                                     className={({isActive}) =>
@@ -69,6 +72,21 @@ export default function Header() {
                                     }
                                 >
                                     Bookmark
+                                </NavLink>
+                            </li>
+
+                            <li>
+                                <NavLink to="/search"
+                                    className={({isActive}) =>
+                                        ` ${isActive?"":""}`
+                                    }
+                                >
+                                <input
+                             type="text"
+                             placeholder="Search scholarships..."
+                             className="px-2 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                          />
+                
                                 </NavLink>
                             </li>
 
