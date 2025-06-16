@@ -1,0 +1,141 @@
+// used in jupyter notebook for again u can use this and to extract from all page u can apply loop
+
+
+
+from selenium import webdriver
+from selenium.webdriver.edge.service import Service
+from selenium.webdriver.edge.options import Options
+from bs4 import BeautifulSoup
+import time
+import re
+from pymongo import MongoClient
+
+
+
+EDGE_DRIVER_PATH = r"C:\Users\Kausi\Downloads\edgedriver_win64\msedgedriver.exe"
+options = Options()
+options.add_argument("--headless")
+service = Service(EDGE_DRIVER_PATH)
+driver = webdriver.Edge(service=service, options=options)
+
+
+
+
+driver.get("https://www.buddy4study.com/scholarships")
+time.sleep(5)
+html = driver.page_source
+driver.quit()
+
+soup = BeautifulSoup(html, "html.parser")
+containers = soup.find_all("a", class_="Listing_categoriesBox__CiGvQ")
+
+
+
+uri=" "
+client = MongoClient(uri)
+
+db = client["scholarship_db"]
+collection = db["buddy4study_scholarships"]
+collection.delete_many({})
+
+
+
+
+
+
+
+
+
+
+
+import re
+
+data_list = []
+
+def clean_amount_field(text):
+    # Try percentage
+    percent = re.search(r"(\d{1,3}%)", text)
+    if percent:
+        return percent.group(1)
+
+    # Try rupee amounts like ₹50,000 or ₹1,20,000
+    rupee = re.search(r"(₹[\d,]+)", text)
+    if rupee:
+        return rupee.group(1)
+
+    # Try plain numbers like 50000
+    number = re.search(r"(\d{4,})", text)
+    if number:
+        return number.group(1)
+
+    return "N/A"
+
+def extract_field(pattern, text, default="N/A"):
+    match = re.search(pattern, text, re.IGNORECASE)
+    return match.group(1).strip() if match else default
+
+for c in containers:
+    # Title
+    title_tag = c.find("h4", class_="Listing_scholarshipName__VLFMj")
+    title = title_tag.text.strip() if title_tag else "N/A"
+        # Awards
+    awards = c.find_all("div", class_="Listing_rightAward__DxMQV")
+    raw_amount = awards[0].text.strip() if len(awards) > 0 else "N/A"
+    amount = clean_amount_field(raw_amount)
+
+    eligibility = awards[1].text.strip() if len(awards) > 1 else "N/A"
+
+    # Deadline
+    deadline_label = c.find("p", string="Deadline")
+    deadline = deadline_label.find_next_sibling("p").text.strip() if deadline_label else "N/A"
+
+    # Link
+    href = c.get("href", "")
+    link = f"https://www.buddy4study.com{href}" if href.startswith("/") else href
+
+    # Extract fields from eligibility
+    eligible_courses = extract_field(r"(?:for|open to)\s+(.*?)(?:\s+students|pursuing)", eligibility)
+    min_gpa = extract_field(r"(?:minimum\s*(?:GPA|CGPA|percentage)[^\d]*(\d+(\.\d+)?))", eligibility)
+    locations = extract_field(r"(?:from|in)\s+(.*?)(?:\s|,|\.|$)", eligibility)
+    income_criteria = extract_field(r"(annual family income.*?₹[\d,]+)", eligibility)
+
+    scholarship = {
+        "title": title,
+        "eligible_courses": eligible_courses or "N/A",
+        "min_gpa": min_gpa or "N/A",
+        "locations": locations if locations else "any",
+        "income_criteria": income_criteria or "N/A",
+        "categories": "General",  # Placeholder
+        "amount": amount,
+        "deadline": deadline,
+        "link": link
+    }
+
+    data_list.append(scholarship)
+
+
+
+
+
+    # Preview scraped results
+from pprint import pprint
+pprint(data_list[:3])
+
+
+
+
+
+collection.insert_many(data_list)
+print("✅ All scholarships saved to MongoDB.")
+
+
+
+
+
+
+for doc in collection.find():
+    print(doc)
+
+
+
+
