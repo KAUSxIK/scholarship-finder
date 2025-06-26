@@ -1,6 +1,17 @@
 import { Student } from "../models/student.model.js";
-
+import { ApiResponse } from "../utils/ApiResponse.js";
 // POST /api/scholarships/match
+
+export const getAllScholarships = async (req, res) => {
+  try {
+    const scholarships = await Student.find({}); // Fetch all
+    res.status(200).json(new ApiResponse(200, scholarships, "Scholarships fetched successfully"));
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Failed to fetch scholarships" });
+  }
+};
+
+
 export const matchScholarships = async (req, res) => {
   try {
     console.log("🔍 Incoming student profile:", req.body);

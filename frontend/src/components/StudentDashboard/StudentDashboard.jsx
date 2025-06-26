@@ -44,6 +44,37 @@ const StudentDashboard = () => {
     setLoading(false);
   };
 
+    // ✅ Handle Bookmark
+  const handleBookmark = async (scholarshipId) => {
+    const token = JSON.parse(localStorage.getItem('token'));
+    console.log("📦 Sending token:", token);
+
+      if (!token) {
+    alert("Please log in to bookmark this scholarship.");
+    return;
+  }
+
+    try {
+      const res = await fetch('http://localhost:8002/api/bookmarks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ scholarshipId }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        alert(data.message || 'Bookmark failed');
+      } else {
+        alert('Bookmarked!');
+      }
+    } catch (err) {
+      alert('Server error while bookmarking.');
+    }
+  };
+
   return (
     <div className="max-w-3xl mx-auto bg-white p-8 mt-6 rounded-lg shadow">
       <h2 className="text-2xl font-bold mb-6 text-center">🎓 Student Profile</h2>
@@ -149,6 +180,12 @@ const StudentDashboard = () => {
                 <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
                   View Details
                 </a>
+                 <button
+                  onClick={() => handleBookmark(item._id)}
+                  className="text-red-500 hover:underline mt-2 block"
+                >
+                Bookmark
+                </button>
               </li>
             ))}
           </ul>

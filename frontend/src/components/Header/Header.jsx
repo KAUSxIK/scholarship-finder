@@ -6,7 +6,7 @@ export default function Header() {
         <header className="shadow sticky z-50 top-0">
             <nav className="bg-indigo-400 border-gray-200 px-4 lg:px-6 py-2.5">
                 <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl ">
-                    <Link to="/" className="flex items-center font-bold text-white text-xl">
+                    <NavLink to="/" className="flex items-center font-bold text-white text-xl">
                         <img
                             src={logo}
                             className="mr-3 h-12"
@@ -14,21 +14,18 @@ export default function Header() {
                         />
                         SCHOLARSHIP FINDER
                     
-                    </Link >
-                    <div className="flex items-center lg:order-2">
-                        <Link
-                            to="#"
+                    </NavLink >
+
+                      <div className="flex items-center lg:order-2">
+                        <NavLink
+                            to="/login"
                             className="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none"
                         >
                             Log in
-                        </Link>
-                        <Link
-                            to="#"
-                            className="text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none"
-                        >
-                            Get started
-                        </Link>
+                        </NavLink>
+    
                     </div>
+                   
                     <div
                         className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
                         id="mobile-menu-2"
@@ -54,41 +51,19 @@ export default function Header() {
                                 </NavLink>
                             </li>
 
-                               <li>
-                                <NavLink to="/notification"
-                                    className={({isActive}) =>
-                                        `block py-2 pr-4 pl-3 duration-200 ${isActive?"text-orange-700":"text-gray-700"}border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`
-                                    }
-                                >
-                                    Notification
-                                </NavLink>
-                            </li>
+                              
 
 
-                               <li>
-                                <NavLink to="/bookmark"
-                                    className={({isActive}) =>
-                                        `block py-2 pr-4 pl-3 duration-200 ${isActive?"text-orange-700":"text-gray-700"}border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`
-                                    }
-                                >
-                                    Bookmark
-                                </NavLink>
-                            </li>
 
-                            <li>
-                                <NavLink to="/search"
-                                    className={({isActive}) =>
-                                        ` ${isActive?"":""}`
-                                    }
-                                >
-                                <input
-                             type="text"
-                             placeholder="Search scholarships..."
-                             className="px-2 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                          />
-                
-                                </NavLink>
-                            </li>
+
+                    
+                    
+                        
+
+         
+
+
+                          
 
 
                         </ul>

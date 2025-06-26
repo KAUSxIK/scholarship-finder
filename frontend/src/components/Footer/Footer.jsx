@@ -1,15 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Mail, Info, Shield } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-800 text-white py-6 mt-10">
-      <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
-        <p className="text-sm">&copy; {new Date().getFullYear()} Scholarship Finder. All rights reserved.</p>
-        <div className="flex space-x-4 mt-2 md:mt-0">
-          <Link to="/about" className="hover:text-orange-400 transition duration-300">About</Link>
-          <Link to="/contact" className="hover:text-orange-400 transition duration-300">Contact</Link>
-          <Link to="/privacy" className="hover:text-orange-400 transition duration-300">Privacy Policy</Link>
+    <footer className="bg-gray-900 text-gray-300 py-8 mt-16 border-t border-gray-700">
+      <div className="container mx-auto px-4 grid md:grid-cols-2 gap-6 items-center justify-between">
+        {/* Left Side */}
+        <div className="text-sm">
+          <p>&copy; {new Date().getFullYear()} <span className="font-semibold text-orange-400">Scholarship Finder</span>. All rights reserved.</p>
+          <p className="mt-1 text-xs text-gray-400">Made by Kausik</p>
+        </div>
+
+        {/* Right Side */}
+        <div className="flex justify-center md:justify-end space-x-6 text-sm">
+          <Link to="/about" className="flex items-center hover:text-orange-400 transition">
+            <Info className="w-4 h-4 mr-1" /> About
+          </Link>
+          <a
+            href="mailto:kausikmohapatra0@gmail.com"
+            className="hover:text-orange-400 transition duration-300"
+          >
+            kausikmohapatra0@gmail.com
+          </a>
+          
         </div>
       </div>
     </footer>

@@ -16,9 +16,13 @@ app.use(cookieParser())
 
 //import routes
 import scholarshipRoutes from './routes/scholarship.routes.js';
+import userRoutes from './routes/user.routes.js';
+
 
 // routes dec
-
+app.use('/api/auth', userRoutes);
 app.use('/api/scholarships', scholarshipRoutes);
+app.use('/api/scholarships', scholarshipRoutes);
+
 
 export {app};
