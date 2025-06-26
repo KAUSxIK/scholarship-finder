@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link,NavLink } from 'react-router-dom'
-import logo from '../../assets/logo.png'
+import logo from '../../assets/Logo.png'
 export default function Header() {
     return (
         <header className="shadow sticky z-50 top-0">
