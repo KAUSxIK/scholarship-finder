@@ -28,7 +28,7 @@ const StudentDashboard = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('http://localhost:8002/api/scholarships/match', {
+      const res = await fetch('https://scholarship-finder-backend-9rkn.onrender.com/api/scholarships/match', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -55,7 +55,7 @@ const StudentDashboard = () => {
   }
 
     try {
-      const res = await fetch('http://localhost:8002/api/bookmarks', {
+      const res = await fetch('https://scholarship-finder-backend-9rkn.onrender.com/api/bookmarks', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
