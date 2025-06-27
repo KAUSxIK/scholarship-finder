@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import MainBanner from '../MainBanner/MainBanner';
 
 export default function Home() {
+
+  
+
+
+
   const [scholarships, setScholarships] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,6 +31,9 @@ export default function Home() {
    const previewScholarships = scholarships.slice(0, 6);
 
   return (
+    <div className='mt-10'> 
+  <MainBanner />
+ 
     <div className="p-8 max-w-7xl mx-auto">
       <h1 className="text-3xl font-bold text-orange-700 mb-6">Featured Scholarships</h1>
  
@@ -63,5 +72,6 @@ export default function Home() {
         </div>
       )}
     </div>
+     </div>
   );
 }

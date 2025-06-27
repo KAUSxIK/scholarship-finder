@@ -23,6 +23,7 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Password is required"],
     },
+    bookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'buddy4study_scholarships' }],
     refreshToken: {
       type: String,
     },

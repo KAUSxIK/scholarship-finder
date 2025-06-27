@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useApp } from '../../context/AppContext'; // ✅ Import AppContext
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useApp(); // ✅ Use the login function from context
 
   const [formData, setFormData] = useState({
     email: '',
@@ -30,9 +32,12 @@ const Login = () => {
         return;
       }
 
-      // ✅ Save token as plain string (not JSON)
+      // ✅ Save data to localStorage
       localStorage.setItem('token', data.data.accessToken);
       localStorage.setItem('user', JSON.stringify(data.data.user));
+
+      // ✅ Update global user state
+      login(data.data.user);
 
       setFormData({ email: '', password: '' });
       navigate('/');

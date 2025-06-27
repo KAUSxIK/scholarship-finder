@@ -9,6 +9,8 @@ import Login from './components/Login/Login.jsx'
 import Signup from './components/Signup/Signup.jsx'
 import { AppProvider } from './context/AppContext.jsx'
 import About from './components/About/About.jsx'
+import Bookmark from './components/Bookmark/Bookmark.jsx'
+
 const router = createBrowserRouter([
 {
   path: '/',
@@ -20,6 +22,8 @@ const router = createBrowserRouter([
      element: <StudentDashboard/>},
       {path: "About",
      element: <About/>},
+     { path: 'Bookmarks',
+       element: <Bookmark/> }, 
     
     
      

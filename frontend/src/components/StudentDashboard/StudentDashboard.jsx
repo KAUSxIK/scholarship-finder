@@ -2,31 +2,22 @@ import React, { useState } from 'react';
 
 const StudentDashboard = () => {
   const [formData, setFormData] = useState({
-     course: '',
-  gpa: '',
-  location: '',
-  income: '',
-  interests: '',
+    course: '',
+    gpa: '',
+    location: '',
+    income: '',
+    interests: '',
   });
 
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
   const [error, setError] = useState('');
 
-  const handleCategoryChange = (e) => {
-    const { value, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      categories: checked
-        ? [...prev.categories, value]
-        : prev.categories.filter((v) => v !== value),
-    }));
-  };
-
   const handleStudentDashboard = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+
     try {
       const res = await fetch('http://localhost:8002/api/scholarships/match', {
         method: 'POST',
@@ -41,27 +32,28 @@ const StudentDashboard = () => {
       console.error('Error:', err);
       setError('Something went wrong. Please try again.');
     }
+
     setLoading(false);
   };
 
-    // ✅ Handle Bookmark
   const handleBookmark = async (scholarshipId) => {
-    const token = JSON.parse(localStorage.getItem('token'));
-    console.log("📦 Sending token:", token);
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user'));
+    const userId = user?._id;
 
-      if (!token) {
-    alert("Please log in to bookmark this scholarship.");
-    return;
-  }
+    if (!token || !userId) {
+      alert("Please log in to bookmark this scholarship.");
+      return;
+    }
 
     try {
-      const res = await fetch('http://localhost:8002/api/bookmarks', {
+      const res = await fetch('http://localhost:8002/api/bookmarks/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ scholarshipId }),
+        body: JSON.stringify({ scholarshipId, userId }),
       });
 
       const data = await res.json();
@@ -71,7 +63,40 @@ const StudentDashboard = () => {
         alert('Bookmarked!');
       }
     } catch (err) {
+      console.error(err);
       alert('Server error while bookmarking.');
+    }
+  };
+
+  const handleRemoveBookmark = async (scholarshipId) => {
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user'));
+    const userId = user?._id;
+
+    if (!token || !userId) {
+      alert("Please log in to remove bookmark.");
+      return;
+    }
+
+    try {
+      const res = await fetch('http://localhost:8002/api/bookmarks/remove', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ scholarshipId, userId }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        alert(data.message || 'Remove failed');
+      } else {
+        alert('Removed from bookmarks!');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Server error while removing bookmark.');
     }
   };
 
@@ -138,9 +163,6 @@ const StudentDashboard = () => {
           />
         </div>
 
-        {/* Categories */}
-      
-
         {/* Interests */}
         <div>
           <label className="block font-medium">Interests</label>
@@ -167,7 +189,7 @@ const StudentDashboard = () => {
         {error && <p className="text-red-600 mt-4 text-center">{error}</p>}
       </form>
 
-      {/* Results */}
+      {/* Matched Scholarships */}
       {results.length > 0 && (
         <div className="mt-8">
           <h3 className="text-xl font-semibold mb-4">🎯 Matched Scholarships</h3>
@@ -180,12 +202,20 @@ const StudentDashboard = () => {
                 <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
                   View Details
                 </a>
-                 <button
-                  onClick={() => handleBookmark(item._id)}
-                  className="text-red-500 hover:underline mt-2 block"
-                >
-                Bookmark
-                </button>
+                <div className="flex gap-4 mt-2">
+                  <button
+                    onClick={() => handleBookmark(item._id)}
+                    className="text-green-600 hover:underline"
+                  >
+                    Bookmark
+                  </button>
+                  <button
+                    onClick={() => handleRemoveBookmark(item._id)}
+                    className="text-red-600 hover:underline"
+                  >
+                    Remove Bookmark
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
