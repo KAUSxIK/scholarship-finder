@@ -13,7 +13,7 @@ export default function Home() {
   useEffect(() => {
   const fetchScholarships = async () => {
     try {
-      const res = await fetch("http://localhost:8002/api/scholarships/data", {
+      const res = await fetch("https://scholarship-finder-backend-9rkn.onrender.com/api/scholarships/data", {
         credentials: "include",
       });
       const json = await res.json();

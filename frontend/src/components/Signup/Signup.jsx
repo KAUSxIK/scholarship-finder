@@ -21,7 +21,7 @@ const Signup = () => {
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:8002/api/auth/register', {
+      const res = await fetch('https://scholarship-finder-backend-9rkn.onrender.com/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
