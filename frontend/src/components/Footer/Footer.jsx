@@ -9,7 +9,7 @@ export default function Footer() {
         {/* Left Side */}
         <div className="text-sm">
           <p>&copy; {new Date().getFullYear()} <span className="font-semibold text-orange-400">Scholarship Finder</span>. All rights reserved.</p>
-          <p className="mt-1 text-xs text-gray-400">Made by Kausik</p>
+          <p className="mt-1 text-xs text-gray-400">Made by IITIAN</p>
         </div>
 
         {/* Right Side */}
@@ -21,7 +21,7 @@ export default function Footer() {
             href="mailto:kausikmohapatra0@gmail.com"
             className="hover:text-orange-400 transition duration-300"
           >
-            kausikmohapatra0@gmail.com
+            Contact Us
           </a>
           
         </div>
@@ -29,3 +29,4 @@ export default function Footer() {
     </footer>
   );
 }
+
