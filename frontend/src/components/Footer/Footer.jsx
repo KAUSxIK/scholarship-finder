@@ -21,7 +21,7 @@ export default function Footer() {
             href="mailto:kausikmohapatra0@gmail.com"
             className="hover:text-orange-400 transition duration-300"
           >
-            kausikmohapatra0@gmail.com
+            Contact Us
           </a>
           
         </div>

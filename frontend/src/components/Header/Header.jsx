@@ -1,14 +1,11 @@
-<<<<<<< HEAD
+
 import React from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../assets/Logo.png';
 import { useApp } from '../../context/AppContext'; // Make sure the path is correct
 
-=======
-import React from 'react'
-import { Link,NavLink } from 'react-router-dom'
-import logo from '../../assets/Logo.png'
->>>>>>> d8d3b63637e53367864ca77e9f3ea08933e40c83
+
+
 export default function Header() {
   const { user, logout } = useApp();
   const navigate = useNavigate();
