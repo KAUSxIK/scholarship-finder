@@ -48,7 +48,7 @@ const StudentDashboard = () => {
 
     try {
 
-      const res = await fetch('http://localhost:8002/api/bookmarks/add', {
+      const res = await fetch('https://scholarship-finder-backend-9rkn.onrender.com/api/bookmarks', {
 
         method: 'POST',
         headers: {
@@ -81,7 +81,7 @@ const StudentDashboard = () => {
     }
 
     try {
-      const res = await fetch('http://localhost:8002/api/bookmarks/remove', {
+      const res = await fetch('https://scholarship-finder-backend-9rkn.onrender.com/api/bookmarks/remove', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

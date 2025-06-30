@@ -6,6 +6,7 @@ import { useApp } from '../../context/AppContext'; // Make sure the path is corr
 
 
 
+//feature_frontend
 export default function Header() {
   const { user, logout } = useApp();
   const navigate = useNavigate();

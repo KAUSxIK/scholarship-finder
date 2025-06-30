@@ -17,7 +17,7 @@ const Bookmark = () => {
           return;
         }
 
-        const res = await fetch(`http://localhost:8002/api/bookmarks/${user._id}`, {
+        const res = await fetch(`https://scholarship-finder-backend-9rkn.onrender.com/api/bookmarks/${user._id}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
